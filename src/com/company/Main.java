@@ -1,11 +1,13 @@
 package com.company;// A Java program to print topological
 // sorting of a DAG  
 
+import javax.swing.*;
 import java.util.*;
 
 // This class represents a directed graph  
 // using adjacency list representation  
 class Graph {
+    static Scanner readInput = new Scanner(System.in);
     // No. of vertices
     private int Vertices;
 
@@ -58,7 +60,7 @@ class Graph {
             visited[i] = false;
 
         // Call the recursive helper  
-// function to store  
+// function to store
         // Topological Sort starting  
         // from all vertices one by one  
         for (int i = 0; i < Vertices; i++)
@@ -70,10 +72,12 @@ class Graph {
             System.out.print(stack.pop() + " ");
     }
 
+
     // Driver method  
     public static void main(String args[]) {
+
         // reading inputs object
-        Scanner readInput = new Scanner(System.in);
+
 
         //number of islands N
         boolean shouldrun = true;
@@ -86,36 +90,77 @@ class Graph {
         do {
             try {
                 numberOfIslands = Integer.parseInt(readInput.nextLine());
+                shouldrun =false;
             } catch (NumberFormatException e) {
                 System.out.println("Enter valid number please.");
             }
         } while (shouldrun);
 
+//        System.out.println("make graph object");
         // Create a graph given in the above diagram
-        Graph g = new Graph(numberOfIslands);
+        Graph myGraph = new Graph(numberOfIslands);
 
+        System.out.println("looping on Vertices to get its edges");
+        for (int versIterator = 1; versIterator <= numberOfIslands; versIterator++) {
+            System.out.println("enter your No."+ versIterator + " please." );
+            List<Integer> verEdges  = getInputs();
+//            System.out.println("veredge "+ verEdges.get(0));
 
-        //content of ئ
-        //enter content of island
-        System.out.println("Enter the number of islands");
-        // testing splitString function
+            for(int edgIterator = 0; edgIterator < verEdges.size(); edgIterator++){
+                if (edgIterator == verEdges.size()-1) myGraph.addEdge(verEdges.get(0), verEdges.get(edgIterator));
+                else myGraph.addEdge(verEdges.get(0), verEdges.get(edgIterator));
 
-        g.addEdge(5, 2);
-        g.addEdge(5, 0);
-        g.addEdge(4, 0);
-        g.addEdge(4, 1);
-        g.addEdge(2, 3);
-        g.addEdge(3, 1);
+            }
+            // add edges and vertices to my graph
+
+        }
 
         System.out.println(
                 "Following is a Topological " +
                         "sort of the given graph");
-        g.topologicalSort();
+        myGraph.topologicalSort();
     }
 
-    void splitString(String index) {
+    public static List<Integer>  getInputs() {
+        int temp;
+        String tempString;
+        List<Integer> output = new ArrayList<Integer>();
+        boolean shouldrun = true;
+        // reading inputs object
+        Scanner readInput = new Scanner(System.in);
+        System.out.println("enter your number followed by its edges separated by space");
+
+
+        do {
+             try {
+                tempString = readInput.nextLine();
+                String[] tempoutput =tempString.split(" ", 0);
+
+                for (int i=0; i < tempoutput.length; i++){
+                    temp = Integer.parseInt(tempoutput[i]);
+                    output.add(temp);
+                }
+                shouldrun =false;
+             } catch (NumberFormatException e) {
+                 System.out.println("Enter valid number please.");
+             }
+        } while (shouldrun);
+
+        //it's the index of island that have a problem
+
+
+
+        return output;
+    }
+
+
+    public static String[] splitString(String index) {
+        int temp;
         String str = index;
         String[] output = str.split(" ", 0);
+
+
+        return output;
     }
 }
 // This code is contributed by Aakash Hasija
